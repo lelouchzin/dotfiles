@@ -1,0 +1,26 @@
+# Arquivos temporários
+**/*.lock
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.swp
+
+# Diretórios de cache
+**/cache/
+**/Cache/
+
+# Configs sensíveis ou desnecessárias
+JetBrains/
+pulse/
+spotify/
+yay/
+dconf/
+xfce4/
+Thunar/
+xsettingsd/
+gtk-3.0/
+gtk-4.0/
+go/
+systemd/
+pavucontrol.ini
+plugins/
