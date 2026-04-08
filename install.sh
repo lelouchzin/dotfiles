@@ -81,7 +81,7 @@ PACMAN_PACKAGES=(
     waybar wofi swaync swayidle
 
     # Terminal e ferramentas de terminal
-    kitty htop neovim lsof nmap sl cmatrix bash-pipes
+    kitty htop neovim lsof nmap sl cmatrix
 
     # Gerenciador de arquivos
     thunar gvfs
@@ -136,7 +136,14 @@ PACMAN_PACKAGES=(
     # (brightnessctl instalado via AUR abaixo)
 )
 
-sudo pacman -S --noconfirm --needed "${PACMAN_PACKAGES[@]}"
+FAILED_PKGS=()
+for pkg in "${PACMAN_PACKAGES[@]}"; do
+    sudo pacman -S --noconfirm --needed "$pkg" 2>/dev/null || {
+        warn "Pacote não encontrado (pulando): $pkg"
+        FAILED_PKGS+=("$pkg")
+    }
+done
+[ ${#FAILED_PKGS[@]} -gt 0 ] && warn "Pacotes não instalados: ${FAILED_PKGS[*]}" || true
 success "Pacotes oficiais instalados"
 
 # ==============================================================================
