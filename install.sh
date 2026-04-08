@@ -66,7 +66,7 @@ step "Instalando pacotes oficiais"
 
 PACMAN_PACKAGES=(
     # Base
-    base base-devel git nano wget unzip zip curl
+    base base-devel git nano wget unzip zip curl cmake cpio
 
     # Shell
     zsh
@@ -104,7 +104,7 @@ PACMAN_PACKAGES=(
     intel-media-driver intel-ucode libva-intel-driver vulkan-intel
 
     # Fontes
-    noto-fonts noto-fonts-cjk otf-codenewroman-nerd
+    noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-nerd-fonts-symbols-mono otf-codenewroman-nerd
 
     # Temas e aparência
     materia-gtk-theme nwg-look
@@ -307,17 +307,37 @@ SYSTEM_SERVICES=(
     NetworkManager
     bluetooth
     iwd
-    ly
     mariadb
     mongodb
     fstrim.timer
 )
 
 for service in "${SYSTEM_SERVICES[@]}"; do
-    if systemctl list-unit-files "$service" &>/dev/null 2>&1; then
-        sudo systemctl enable "$service" 2>/dev/null && success "Serviço habilitado: $service" || warn "Falha ao habilitar: $service"
+    if systemctl list-unit-files "${service}.service" 2>/dev/null | grep -q "${service}"; then
+        sudo systemctl enable "$service" && success "Serviço habilitado: $service" || warn "Falha ao habilitar: $service"
+    else
+        warn "Serviço não encontrado, pulando: $service"
     fi
 done
+
+# Configurar Ly como display manager
+step "Configurando Ly (display manager)"
+
+# Desabilitar DMs conflitantes
+for dm in gdm sddm lightdm lxdm xdm; do
+    if systemctl list-unit-files "${dm}.service" 2>/dev/null | grep -q "$dm"; then
+        if systemctl is-enabled "$dm" &>/dev/null; then
+            sudo systemctl disable "$dm" && warn "DM conflitante desabilitado: $dm"
+        fi
+    fi
+done
+
+if systemctl list-unit-files "ly@.service" 2>/dev/null | grep -q "ly"; then
+    # Ly 1.3+ usa serviço template — habilitar no tty2
+    sudo systemctl enable ly@tty2.service && success "Ly habilitado em tty2" || error "Falha ao habilitar ly@tty2.service"
+else
+    warn "ly@.service não encontrado — verifique se o pacote 'ly' foi instalado"
+fi
 
 # Habilitar serviços de usuário
 USER_SERVICES=(
