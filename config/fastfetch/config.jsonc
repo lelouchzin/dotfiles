@@ -1,0 +1,36 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+
+  "logo": {
+    "type": "file",
+    "source": "/home/lelouch/.config/fastfetch/ll.txt"
+  },
+
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "display",
+    "de",
+    "wm",
+    "theme",
+    "icons",
+    "font",
+    "cursor",
+    "terminal",
+    "terminalfont",
+    "cpu",
+    "gpu",
+    "memory",
+    "swap",
+    "disk",
+    "battery",
+    "locale",
+    "color"
+  ]
+}

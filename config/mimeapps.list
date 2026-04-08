@@ -1,0 +1,9 @@
+[Default Applications]
+x-scheme-handler/postman=Postman.desktop
+application/x-zerosize=code-oss.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+
+[Added Associations]
+application/x-zerosize=code-oss.desktop;
+application/sql=com.visualstudio.code.desktop;

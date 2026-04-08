@@ -1,0 +1,32 @@
+# Cache e dados temporários (nova estrutura config/)
+config/wal/schemes/
+config/wal/templates/
+config/Code/
+config/Code - OSS/
+config/Postman/
+config/JetBrains/
+config/github-copilot/
+config/pulse/
+config/dconf/
+config/systemd/
+config/go/
+config/spotify/
+config/yay/
+config/ngrok/
+config/balenaEtcher/
+config/beekeeper-studio/
+config/dbgate/
+
+# Cache (antiga estrutura .config/ — resquícios de commits antigos)
+.config/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.pid
+*.lock
+
+# Arquivos pessoais sensíveis
+config/autostart/mathworks*
+.config/beekeeper-studio/app.db
+.config/JetBrains/
